@@ -13,6 +13,7 @@ namespace Demo1_AzureFunction.Functions
     public class CheckConfiguration
     {
         private readonly IConfigurationRoot _configuration;
+        private const string ConfigPrefix = "DemoFunction:";
 
         public CheckConfiguration(IConfigurationRoot configuration)
         {
@@ -27,14 +28,14 @@ namespace Demo1_AzureFunction.Functions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var responseMessage = new
-            {                
-                sqlCommandTimeoutInSeconds = int.Parse(_configuration["SqlCommandTimeout"] ?? "30"),
-                queueProcessingDelayTimeoutInSeconds = int.Parse(_configuration["QueueProcessingDelayTimeout"] ?? "30"),
-                workItemQueueName = _configuration["WorkItemsQueueName"],
-                httpClientTimeoutInSeconds = int.Parse(_configuration["HttpClientTimeoutInSeconds"] ?? "100"),
-                geoStorageMaxRetries = int.Parse(_configuration["GeoRedundantStorage-MaxRetries"] ?? "3"),
-                geoStorageDelayInSeconds = double.Parse(_configuration["GeoRedundantStorage-DelayInSeconds"] ?? "0.5"),
-                geoStorageMaxDelayInSeconds = int.Parse(_configuration["GeoRedundantStorage-MaxDelayInSeconds"] ?? "3")
+            {
+                sqlCommandTimeoutInSeconds = int.Parse(_configuration[$"{ConfigPrefix}SqlCommandTimeout"] ?? "30"),
+                queueProcessingDelayTimeoutInSeconds = int.Parse(_configuration[$"{ConfigPrefix}QueueProcessingDelayTimeout"] ?? "30"),
+                workItemQueueName = _configuration[$"{ConfigPrefix}WorkItemsQueueName"],
+                httpClientTimeoutInSeconds = int.Parse(_configuration[$"{ConfigPrefix}HttpClientTimeoutInSeconds"] ?? "100"),
+                geoStorageMaxRetries = int.Parse(_configuration[$"{ConfigPrefix}GeoRedundantStorage-MaxRetries"] ?? "3"),
+                geoStorageDelayInSeconds = double.Parse(_configuration[$"{ConfigPrefix}GeoRedundantStorage-DelayInSeconds"] ?? "0.5"),
+                geoStorageMaxDelayInSeconds = int.Parse(_configuration[$"{ConfigPrefix}GeoRedundantStorage-MaxDelayInSeconds"] ?? "3")
             };
 
             return new OkObjectResult(responseMessage);
