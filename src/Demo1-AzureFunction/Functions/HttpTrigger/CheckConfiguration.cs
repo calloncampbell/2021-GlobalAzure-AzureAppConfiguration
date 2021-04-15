@@ -28,7 +28,7 @@ namespace Demo1_AzureFunction.Functions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var responseMessage = new
-            {                
+            {
                 sqlCommandTimeoutInSeconds = int.Parse(_configuration[$"{ConfigPrefix}SqlCommandTimeout"] ?? "30"),
                 queueProcessingDelayTimeoutInSeconds = int.Parse(_configuration[$"{ConfigPrefix}QueueProcessingDelayTimeout"] ?? "30"),
                 workItemQueueName = _configuration[$"{ConfigPrefix}WorkItemsQueueName"],
