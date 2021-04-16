@@ -46,14 +46,14 @@ namespace Demo1_AzureFunction
                        .ConfigureRefresh(refreshOptions =>
                             refreshOptions.Register(key: "DemoFunction:Sentinel", label: environmentLabel, refreshAll: true)
                                           //.SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
-                                          .SetCacheExpiration(TimeSpan.FromDays(30))                                          
+                                          .SetCacheExpiration(TimeSpan.FromDays(31))                                          
                        )
                        // Indicate to load feature flags
                        .UseFeatureFlags(flagOptions =>
                        {
                            flagOptions.Label = environmentLabel;
                            //flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
-                           flagOptions.CacheExpirationInterval = TimeSpan.FromDays(30);
+                           flagOptions.CacheExpirationInterval = TimeSpan.FromDays(31);
                        });
                 ConfigurationRefresher = options.GetRefresher();
             });
