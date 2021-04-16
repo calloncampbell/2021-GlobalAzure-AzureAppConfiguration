@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Workflows", "GitHub Workflows", "{0EA94EAF-D5A3-4CA3-AF27-A68D4555899D}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\func-config-failover-westus2.yml = .github\workflows\func-config-failover-westus2.yml
 		.github\workflows\func-demofunction.yml = .github\workflows\func-demofunction.yml
 	EndProjectSection
 EndProject
