@@ -52,6 +52,7 @@ namespace Demo1_AzureFunction
 
             builder.Services.AddLogging();
             builder.Services.AddSingleton(Configuration);
+            builder.Services.AddSingleton(ConfigurationRefresher);
         }
     }
 }
