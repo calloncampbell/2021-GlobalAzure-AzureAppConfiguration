@@ -5,6 +5,7 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 
 [assembly: FunctionsStartup(typeof(Demo1_AzureFunction.Startup))]
 
@@ -45,13 +46,20 @@ namespace Demo1_AzureFunction
                        .ConfigureRefresh(refreshOptions =>
                             refreshOptions.Register(key: "DemoFunction:Sentinel", label: environmentLabel, refreshAll: true)
                                           .SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
-                       );
+                       )// Indicate to load feature flags
+                       .UseFeatureFlags(flagOptions =>
+                       {
+                           flagOptions.Label = environmentLabel;
+                           flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
+                       });
                 ConfigurationRefresher = options.GetRefresher();
             });
             Configuration = ConfigurationBuilder.Build();
 
             builder.Services.AddLogging();
             builder.Services.AddSingleton(Configuration);
+            builder.Services.AddSingleton(ConfigurationRefresher);
+            builder.Services.AddFeatureManagement(Configuration);
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "PrimaryStoreEndpoint": "https://config-failover-westus2.azconfig.io",
+    "SecondaryStoreEndpoint": "https://config-failover-westcentralus.azconfig.io",
+    "StorageQueueUri": "https://storageconfigfailover1.queue.core.windows.net/configfailover-auto-backup"
+  }
+}
