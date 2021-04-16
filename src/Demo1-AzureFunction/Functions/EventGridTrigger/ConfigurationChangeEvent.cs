@@ -26,6 +26,8 @@ namespace Demo1_AzureFunction.Functions
         {
             log.LogInformation(eventGridEvent.Data.ToString());
 
+            // A random delay is added before the cached value is marked as dirty to reduce potential
+            // throttling in case multiple instances refresh at the same time.
             _configurationRefresher.SetDirty();
         }
     }
