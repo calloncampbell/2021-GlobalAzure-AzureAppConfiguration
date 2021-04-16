@@ -18,7 +18,7 @@ namespace Demo1_AzureFunction.Functions
         private const string ConfigPrefix = "DemoFunction:";
 
         public CheckConfiguration(
-            IConfigurationRefresher configurationRefresher, 
+            IConfigurationRefresher configurationRefresher,
             IConfigurationRoot configuration)
         {
             _configurationRefresher = configurationRefresher;
