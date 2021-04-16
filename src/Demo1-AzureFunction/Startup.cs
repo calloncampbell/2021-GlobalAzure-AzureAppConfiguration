@@ -45,12 +45,15 @@ namespace Demo1_AzureFunction
                        // Configure to reload configuration if the registered 'Sentinel' key is modified
                        .ConfigureRefresh(refreshOptions =>
                             refreshOptions.Register(key: "DemoFunction:Sentinel", label: environmentLabel, refreshAll: true)
-                                          .SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
-                       )// Indicate to load feature flags
+                                          //.SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
+                                          .SetCacheExpiration(TimeSpan.FromDays(30))                                          
+                       )
+                       // Indicate to load feature flags
                        .UseFeatureFlags(flagOptions =>
                        {
                            flagOptions.Label = environmentLabel;
-                           flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
+                           //flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
+                           flagOptions.CacheExpirationInterval = TimeSpan.FromDays(30);
                        });
                 ConfigurationRefresher = options.GetRefresher();
             });

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -12,20 +13,26 @@ namespace Demo1_AzureFunction.Functions
 {
     public class CheckConfiguration
     {
+        private readonly IConfigurationRefresher _configurationRefresher;
         private readonly IConfigurationRoot _configuration;
         private const string ConfigPrefix = "DemoFunction:";
 
-        public CheckConfiguration(IConfigurationRoot configuration)
+        public CheckConfiguration(
+            IConfigurationRefresher configurationRefresher, 
+            IConfigurationRoot configuration)
         {
+            _configurationRefresher = configurationRefresher;
             _configuration = configuration;
         }
 
         [FunctionName(nameof(CheckConfiguration))]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            await _configurationRefresher.TryRefreshAsync();
 
             var responseMessage = new
             {

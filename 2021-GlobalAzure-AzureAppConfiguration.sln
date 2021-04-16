@@ -5,6 +5,13 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo1-AzureFunction", "src\Demo1-AzureFunction\Demo1-AzureFunction.csproj", "{EF5E57F5-5E4F-4F83-8635-5D9DD5E3621A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{B8D33F63-CDF5-41B8-ACF3-4D6F9CEDB30C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Workflows", "GitHub Workflows", "{0EA94EAF-D5A3-4CA3-AF27-A68D4555899D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\func-demofunction.yml = .github\workflows\func-demofunction.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +25,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EA94EAF-D5A3-4CA3-AF27-A68D4555899D} = {B8D33F63-CDF5-41B8-ACF3-4D6F9CEDB30C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51251ED5-C1DB-4588-871F-F7AD4D561CA7}
