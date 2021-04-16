@@ -57,6 +57,57 @@ namespace Demo1_AzureFunction
                        });
                 ConfigurationRefresher = options.GetRefresher();
             });
+
+            // Load configuration from Azure App Configuration (Primary or Secondary Stores)
+            var connectionString_PrimaryStore = Environment.GetEnvironmentVariable("AzureAppConfigConnectionString_PrimaryStore");
+            var connectionString_SecondaryStore = Environment.GetEnvironmentVariable("AzureAppConfigConnectionString_SecondaryStore");
+            var cacheExpiryInSeconds = double.Parse(Environment.GetEnvironmentVariable("AzureAppConfigurationCacheExpirationTimeInSeconds") ?? "900");
+            var environmentLabel = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("AzureAppConfigurationEnvironmentLabel"))
+                ? Environment.GetEnvironmentVariable("AzureAppConfigurationEnvironmentLabel")
+                : LabelFilter.Null;
+
+            ConfigurationBuilder
+                .AddAzureAppConfiguration(options =>
+                {
+                    options.Connect(connectionString_SecondaryStore)
+                           // Load all keys that start with `DemoFunction:`
+                           .Select("DemoFunction:*")
+                           .Select("DemoFunction:*", environmentLabel)
+                           // Configure to reload configuration if the registered 'Sentinel' key is modified
+                           .ConfigureRefresh(refreshOptions =>
+                                refreshOptions.Register(key: "DemoFunction:Sentinel", label: environmentLabel, refreshAll: true)
+                                          //.SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
+                                          .SetCacheExpiration(TimeSpan.FromDays(30))
+                           )
+                           // Indicate to load feature flags
+                           .UseFeatureFlags(flagOptions =>
+                           {
+                               flagOptions.Label = environmentLabel;
+                               flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
+                           });
+                    ConfigurationRefresher = options.GetRefresher();
+                }, optional: true)
+                .AddAzureAppConfiguration(options =>
+                {
+                    options.Connect(connectionString_PrimaryStore)
+                           // Load all keys that start with `DemoFunction:`
+                           .Select("DemoFunction:*")
+                           .Select("DemoFunction:*", environmentLabel)
+                           // Configure to reload configuration if the registered 'Sentinel' key is modified
+                           .ConfigureRefresh(refreshOptions =>
+                                refreshOptions.Register(key: "DemoFunction:Sentinel", label: environmentLabel, refreshAll: true)
+                                          //.SetCacheExpiration(TimeSpan.FromSeconds(cacheExpiryInSeconds))
+                                          .SetCacheExpiration(TimeSpan.FromDays(30))
+                           )
+                           // Indicate to load feature flags
+                           .UseFeatureFlags(flagOptions =>
+                           {
+                               flagOptions.Label = environmentLabel;
+                               flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(cacheExpiryInSeconds);
+                           });
+                    ConfigurationRefresher = options.GetRefresher();
+                }, optional: true);
+
             Configuration = ConfigurationBuilder.Build();
 
             builder.Services.AddLogging();
