@@ -66,6 +66,8 @@ namespace Demo1_AzureFunction
                 ? Environment.GetEnvironmentVariable("AzureAppConfigurationEnvironmentLabel")
                 : LabelFilter.Null;
 
+            // Arrange your code so that it loads from the secondary store first and then the primary store.
+            // This approach ensures that the configuration data in the primary store takes precedence whenever it's available.
             ConfigurationBuilder
                 .AddAzureAppConfiguration(options =>
                 {
