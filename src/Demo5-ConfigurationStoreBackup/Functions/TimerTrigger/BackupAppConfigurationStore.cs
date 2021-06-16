@@ -53,7 +53,7 @@ namespace Demo5_ConfigurationStoreBackup.Functions
 		/// Please ensure that the environment variable '{SecondaryConfigStoreEndpointEnvVarName}' is set to the endpoint of the secondary App Configuration store.
 		/// </exception>
 		[FunctionName(nameof(BackupAppConfigurationStore))]
-		public static async Task Run([TimerTrigger("0 */1 * * * *")] TimerInfo myTimer, ILogger log)
+		public static async Task Run([TimerTrigger("%TimerTrigger.BackupAppConfigurationStoreBackup.Schedule%")] TimerInfo myTimer, ILogger log)
 		{
 			log.LogInformation($"Azure App Configuration store backup started at: {DateTime.Now}");
 			string storageQueueUri = Environment.GetEnvironmentVariable(StorageQueueUriEnvVarName);

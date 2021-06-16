@@ -30,3 +30,7 @@ Example:
 - PrimaryStoreEndpoint: https://{store1}.azconfig.io
 - SecondaryStoreEndpoint: https://{store2}.azconfig.io
 - StorageQueueUri: https://{account_name}.queue.core.windows.net/{queue_name}
+
+# References
+https://docs.microsoft.com/en-us/azure/azure-app-configuration/howto-backup-config-store
+https://github.com/Azure/AppConfiguration/tree/main/examples/ConfigurationStoreBackup
